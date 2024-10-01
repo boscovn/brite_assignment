@@ -17,7 +17,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
   mock-omdb-api:
     build:
-      context: ./mock-omdb-api
+      context: ./mock-omdb
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
@@ -32,13 +32,16 @@ services:
       - redis
       - mock-omdb-api
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/postgres
+      PG_HOST: db
+      PG_PORT: 5432
+      PG_USER: postgres
+      PG_PASSWORD: postgres
       CACHE_TYPE: RedisCache
-      CACHE_REDIS_HOST: redis
-      CACHE_REDIS_PORT: 6379
-      CACHE_REDIS_DB: 0
-      CACHE_REDIS_PASSWORD: ""
-      OMDB_API_KEY: ${OMDB_API_KEY}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_DB: 0
+      REDIS_PASSWORD: ""
+      OMDB_API_KEY: "not-needed-for-testing"
       OMDB_API_URL: http://mock-omdb-api:8081
     build:
       context: ./movies-api
@@ -60,5 +63,12 @@ services:
       interval: 30s
       timeout: 30s
       retries: 3
+  e2e:
+    image: ghcr.io/orange-opensource/hurl:5.0.1
+    depends_on:
+      - api
+    command: ["--test", "/data/e2e.hurl", "--variable", "API_URL=http://api:8080"]
+    volumes:
+      - ./test-utils/e2e:/data
 volumes:
   postgres_data:

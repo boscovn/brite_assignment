@@ -17,4 +17,6 @@ CMD ["pytest"]
 FROM base AS prod
 WORKDIR /app/movies_api
 EXPOSE 8080
-CMD ["gunicorn","--timeout", "3600", "--chdir","/app/movies_api" ,"wsgi:app", "-b", "0.0.0.0:8080"]
+ENV PYTHONPATH=/app
+CMD ["gunicorn","--timeout", "3600", "wsgi:app", "-b", "0.0.0.0:8080"]
+
