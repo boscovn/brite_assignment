@@ -1,0 +1,64 @@
+services:
+  db:
+    image: postgres:12
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  mock-omdb-api:
+    build:
+      context: ./mock-omdb-api
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    ports:
+      - "8081:8080"
+  api:
+    depends_on:
+      - db
+      - redis
+      - mock-omdb-api
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/postgres
+      CACHE_TYPE: RedisCache
+      CACHE_REDIS_HOST: redis
+      CACHE_REDIS_PORT: 6379
+      CACHE_REDIS_DB: 0
+      CACHE_REDIS_PASSWORD: ""
+      OMDB_API_KEY: ${OMDB_API_KEY}
+      OMDB_API_URL: http://mock-omdb-api:8081
+    build:
+      context: ./movies-api
+      target: prod
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    ports:
+      - "8080:8080"
+  redis:
+    image: redis:6
+    restart: always
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+volumes:
+  postgres_data:
