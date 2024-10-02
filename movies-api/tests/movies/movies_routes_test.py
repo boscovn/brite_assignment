@@ -24,8 +24,8 @@ def app():
         db.create_all()
         movie1 = Movie(
             "Movie 1",
-            2021,
             "id235",
+            2021,
             5,
             "Action",
             "Philip Max",
@@ -34,8 +34,8 @@ def app():
         )
         movie2 = Movie(
             "Movie 2",
-            2022,
             "id236",
+            2022,
             6,
             "Drama",
             "Johan Sebastian Mastropiero",
@@ -44,8 +44,8 @@ def app():
         )
         movie3 = Movie(
             "Movie 3",
-            2023,
             "id237",
+            2023,
             7,
             "Comedy",
             "John Doe",
