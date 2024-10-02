@@ -79,5 +79,6 @@ def handle_exception(e):
     app.logger.error(e)
     return {"message:": "An error occurred"}, 500
 
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
