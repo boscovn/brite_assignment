@@ -1,6 +1,6 @@
 clean:
-	docker compose down -v
-	docker compose rm -f
+	OMDB_API_KEY=notneeded docker compose down -v
+	OMDB_API_KEY=notneeded
 	docker compose -f test.compose.yaml down -v
 	docker compose -f test.compose.yaml rm -f
 	#

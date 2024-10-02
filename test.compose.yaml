@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:12
+    image: postgres:17.0-alpine3.20
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -8,9 +8,11 @@ services:
       POSTGRES_DB: postgres
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 30s
-      timeout: 30s
+      interval: 1m30s
       retries: 3
+      start_interval: 5s
+      start_period: 5s
+      timeout: 30s
     ports:
       - "5432:5432"
     volumes:
@@ -21,28 +23,35 @@ services:
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 30s
-      timeout: 30s
+      interval: 1m30s
       retries: 3
+      start_interval: 5s
+      start_period: 5s
+      timeout: 30s
     ports:
       - "8081:8080"
   api:
     depends_on:
-      - db
-      - redis
-      - mock-omdb-api
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      mock-omdb-api:
+        condition: service_healthy
     environment:
       PG_HOST: db
       PG_PORT: 5432
       PG_USER: postgres
       PG_PASSWORD: postgres
+      PG_DATABASE: postgres
       CACHE_TYPE: RedisCache
       REDIS_HOST: redis
       REDIS_PORT: 6379
       REDIS_DB: 0
       REDIS_PASSWORD: ""
       OMDB_API_KEY: "not-needed-for-testing"
-      OMDB_API_URL: http://mock-omdb-api:8081
+      OMDB_URL: http://mock-omdb-api:8080
+      FLASK_ENV: Production
     build:
       context: ./movies-api
       target: prod
@@ -54,19 +63,22 @@ services:
     ports:
       - "8080:8080"
   redis:
-    image: redis:6
+    image: redis:7.4.0-alpine3.20
     restart: always
     ports:
       - "6379:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
-      interval: 30s
-      timeout: 30s
+      interval: 1m30s
       retries: 3
+      start_interval: 5s
+      start_period: 5s
+      timeout: 30s
   e2e:
     image: ghcr.io/orange-opensource/hurl:5.0.1
     depends_on:
-      - api
+      api:
+        condition: service_healthy
     command: ["--test", "/data/e2e.hurl", "--variable", "API_URL=http://api:8080"]
     volumes:
       - ./test-utils/e2e:/data

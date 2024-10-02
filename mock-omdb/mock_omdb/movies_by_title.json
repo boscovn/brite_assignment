@@ -1,0 +1,74 @@
+{
+  "La Dolce Vita": {
+    "Title": "La Dolce Vita",
+    "Year": "1960",
+    "Rated": "Not Rated",
+    "Released": "19 Apr 1961",
+    "Runtime": "174 min",
+    "Genre": "Comedy, Drama",
+    "Director": "Federico Fellini",
+    "Writer": "Federico Fellini, Ennio Flaiano, Tullio Pinelli",
+    "Actors": "Marcello Mastroianni, Anita Ekberg, Anouk Aimée",
+    "Plot": "A series of stories following a week in the life of a philandering tabloid journalist living in Rome.",
+    "Language": "Italian, English, French, German",
+    "Country": "Italy, France",
+    "Awards": "Won 1 Oscar. 11 wins & 12 nominations total",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BODQ0NzY5NGEtYTc5NC00Yjg4LTg4Y2QtZjE2MTkyYTNmNmU2L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "Ratings": [
+      {
+        "Source": "Internet Movie Database",
+        "Value": "8.0/10"
+      },
+      {
+        "Source": "Rotten Tomatoes",
+        "Value": "95%"
+      },
+      {
+        "Source": "Metacritic",
+        "Value": "95/100"
+      }
+    ],
+    "Metascore": "95",
+    "imdbRating": "8.0",
+    "imdbVotes": "79,052",
+    "imdbID": "tt0053779",
+    "Type": "movie",
+    "DVD": "N/A",
+    "BoxOffice": "N/A",
+    "Production": "N/A",
+    "Website": "N/A",
+    "Response": "True"
+  },
+  "La escopeta nacional": {
+    "Title": "La escopeta nacional",
+    "Year": "1978",
+    "Rated": "N/A",
+    "Released": "19 Feb 1981",
+    "Runtime": "95 min",
+    "Genre": "Comedy",
+    "Director": "Luis García Berlanga",
+    "Writer": "Rafael Azcona, Luis García Berlanga",
+    "Actors": "Rafael Alonso, Luis Escobar, Antonio Ferrandis",
+    "Plot": "Jaume Canivell, Catalan manufacturer of mechanical porters, accompanies his lover on a hunt to relate to important people. The farm where it is organized is full of strange characters.",
+    "Language": "Spanish, Catalan",
+    "Country": "Spain",
+    "Awards": "2 wins",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BMGNmY2E0MTItYzI1YS00NzFhLWE5MTMtMTQwOWVjYTUxODA0XkEyXkFqcGdeQXVyODc0OTEyNDU@._V1_SX300.jpg",
+    "Ratings": [
+      {
+        "Source": "Internet Movie Database",
+        "Value": "7.3/10"
+      }
+    ],
+    "Metascore": "N/A",
+    "imdbRating": "7.3",
+    "imdbVotes": "2,175",
+    "imdbID": "tt0076001",
+    "Type": "movie",
+    "DVD": "N/A",
+    "BoxOffice": "N/A",
+    "Production": "N/A",
+    "Website": "N/A",
+    "Response": "True"
+  }
+}

@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:12
+    image: postgres:17.0-alpine3.20
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -8,17 +8,21 @@ services:
       POSTGRES_DB: postgres
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 30s
-      timeout: 30s
+      interval: 1m30s
       retries: 3
+      start_interval: 5s
+      start_period: 5s
+      timeout: 30s
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
   api:
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     environment:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/postgres
       PG_HOST: db
@@ -32,7 +36,7 @@ services:
       REDIS_PORT: 6379
       REDIS_DB: 0
       REDIS_PASSWORD: ""
-      OMDB_API_KEY: ${OMDB_API_KEY}
+      OMDB_API_KEY: ${OMDB_API_KEY?"OMDB_API_KEY is required"}
       FLASK_ENV: Production
     build:
       context: ./movies-api
@@ -45,14 +49,16 @@ services:
     ports:
       - "8080:8080"
   redis:
-    image: redis:6
+    image: redis:7.4.0-alpine3.20
     restart: always
     ports:
       - "6379:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
-      interval: 30s
-      timeout: 30s
+      interval: 1m30s
       retries: 3
+      start_interval: 5s
+      start_period: 5s
+      timeout: 30s
 volumes:
   postgres_data:

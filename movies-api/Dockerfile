@@ -1,5 +1,5 @@
 FROM python:3.12.0b3-alpine AS base
-RUN apk add --no-cache gcc musl-dev libpq-dev
+RUN apk add --no-cache gcc musl-dev libpq-dev curl
 COPY poetry.lock  /app/
 COPY pyproject.toml /app/
 WORKDIR /app

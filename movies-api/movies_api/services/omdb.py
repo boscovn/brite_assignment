@@ -9,8 +9,6 @@ async def get_movie_by_id(
     """Get movie details by IMDb ID asynchronously."""
     params = {"apikey": api_key, "i": imdb_id}
     async with session.get(url, params=params) as response:
-        # This need some sort of error handling
-
         return await response.json()
 
 
@@ -28,7 +26,7 @@ async def get_n_movies(api_key, url, num_movies) -> list:
 
     async with aiohttp.ClientSession() as session:
         while len(ids) < num_movies:
-            params = {"apikey": api_key, "s": "they", "page": page}
+            params = {"apikey": api_key, "s": "they", "page": page, "type": "movie"}
             async with session.get(url, params=params) as response:
                 response_json = await response.json()
 

@@ -5,6 +5,7 @@ from movies_api.movies.models import Movie
 from movies_api.utils import db, jwt, cache
 from flask_jwt_extended import create_access_token
 from unittest.mock import patch
+import datetime
 
 
 @pytest.fixture
@@ -21,11 +22,36 @@ def app():
     app.register_blueprint(movies_bp)
     with app.app_context():
         db.create_all()
-        movie1 = Movie("Movie 1", 2021, "id235", "5 min", "Action", "Philip Max")
-        movie2 = Movie(
-            "Movie 2", 2022, "id236", "6 min", "Drama", "Johan Sebastian Mastropiero"
+        movie1 = Movie(
+            "Movie 1",
+            2021,
+            "id235",
+            5,
+            "Action",
+            "Philip Max",
+            datetime.date(2021, 1, 1),
+            None,
         )
-        movie3 = Movie("Movie 3", 2023, "id237", "7 min", "Comedy", "John Doe")
+        movie2 = Movie(
+            "Movie 2",
+            2022,
+            "id236",
+            6,
+            "Drama",
+            "Johan Sebastian Mastropiero",
+            datetime.date(2022, 1, 1),
+            None,
+        )
+        movie3 = Movie(
+            "Movie 3",
+            2023,
+            "id237",
+            7,
+            "Comedy",
+            "John Doe",
+            datetime.date(2023, 1, 1),
+            None,
+        )
         db.session.add(movie1)
         db.session.add(movie2)
         db.session.add(movie3)
