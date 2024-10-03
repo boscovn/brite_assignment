@@ -27,8 +27,8 @@ jobs:
       - name: Build Docker image
         working-directory: ./movies-api
         run: |
-          docker build -t ghcr.io/${{ github.username }}/movies-api:${{ github.sha }} --target prod .
+          docker build -t ghcr.io/boscovn/movies-api:${{ github.sha }} --target prod .
 
       - name: Push Docker image
         run: |
-          docker push ghcr.io/${{ github.repository }}:{{ github.sha }}
+          docker push ghcr.io/boscovn/movies-api:{{ github.sha }}
