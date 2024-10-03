@@ -25,8 +25,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Docker image
+        working-directory: ./movies-api
         run: |
-          docker build -t ghcr.io/${{ github.repository }}:{{ github.sha }} --target prod .
+          docker build -t ghcr.io/${{ github.username }}/movies-api:${{ github.sha }} --target prod .
 
       - name: Push Docker image
         run: |
