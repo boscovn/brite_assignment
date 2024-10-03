@@ -38,6 +38,13 @@ def test_login_no_user(client):
     assert response.status_code == 400
 
 
+def test_login_user_not_found(client):
+    response = client.post(
+        "/login", json={"username": "not_found", "password": "password"}
+    )
+    assert response.status_code == 404
+
+
 def test_login_no_password(client):
     response = client.post("/login", json={"username": "test"})
     assert response.status_code == 400

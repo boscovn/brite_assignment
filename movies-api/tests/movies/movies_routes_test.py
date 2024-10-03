@@ -207,6 +207,16 @@ def test_add_movie(app):
         assert movie.title == "Movie 4"
 
 
+def test_add_movie_imdbid_clash(app):
+    client = app.test_client()
+    response = client.post("/add", json={"title": "Movie 4"})
+    mock_response = {"Title": "Movie 4", "Year": "2024", "imdbID": "id235"}
+    with patch("requests.get") as mock_get:
+        mock_get.return_value.json.return_value = mock_response
+        response = client.post("/add", json={"title": "Movie 4"})
+        assert response.status_code == 500
+
+
 def test_add_movie_no_title(app):
     client = app.test_client()
     response = client.post("/add", json={"non_title": "Movie 1"})

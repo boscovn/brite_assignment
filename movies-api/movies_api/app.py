@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.exceptions import HTTPException
 import movies_api.config as config
 from movies_api.utils import db, jwt, cache
-from dotenv import load_dotenv
 from movies_api.movies.models import Movie
 from movies_api.movies.routes import movies_bp
 from movies_api.users.models import User
@@ -31,7 +30,6 @@ if config_name == "Production":
 elif config_name == "Testing":
     app.config.from_object(config.TestingConfig)
 elif config_name == "Development":
-    load_dotenv()
     app.config.from_object(config.DevelopmentConfig)
 else:
     print("Invalid FLASK_ENV value")

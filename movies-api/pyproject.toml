@@ -27,6 +27,11 @@ uvicorn = "^0.31.0"
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+addopts = ["--cov=movies_api", "--cov-report=term-missing"]
+
+[tool.coverage.run]
+omit = ["movies_api/wsgi.py", "movies_api/config.py"]
 
 
 [build-system]

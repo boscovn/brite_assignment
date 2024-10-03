@@ -15,9 +15,6 @@ class Movie(db.Model):
 
     __tablename__ = "movies"
 
-    def __repr__(self):
-        return f"<Movie {self.title}>"
-
     def __init__(
         self,
         title: str,

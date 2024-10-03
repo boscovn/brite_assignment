@@ -65,3 +65,128 @@ def test_movie_to_dict():
     assert movie_dict["runtime"] == "120 min"
     assert movie_dict["poster"] == "https://www.example.com/poster.jpg"
     assert movie_dict["release_date"] == "01/01/2021"
+
+
+def test_from_open_movie_db(setup):
+    data = {
+        "Title": "Test Movie",
+        "Year": "2021",
+        "imdbID": "tt1234567",
+        "Runtime": "120 min",
+        "Response": "True",
+        "Genre": "Action",
+        "Director": "John Doe",
+        "Poster": "https://www.example.com/poster.jpg",
+        "Released": "01 Jan 2021",
+    }
+    movie = Movie.from_open_movie_db(data)
+    assert movie.title == "Test Movie"
+    assert movie.year == 2021
+    assert movie.imdb_id == "tt1234567"
+    assert movie.runtime == 120
+    assert movie.genre == "Action"
+    assert movie.director == "John Doe"
+    assert movie.poster == "https://www.example.com/poster.jpg"
+    assert movie.release_date == datetime.date(2021, 1, 1)
+
+
+def test_from_open_movie_db_invalid_title():
+    data = {
+        "Title": 123,
+        "Year": "2021",
+        "imdbID": "tt1234567",
+        "Runtime": "120 min",
+        "Response": "True",
+        "Genre": "Action",
+        "Director": "John Doe",
+        "Poster": "https://www.example.com/poster.jpg",
+        "Released": "01 Jan 2021",
+    }
+    with pytest.raises(ValueError) as e:
+        Movie.from_open_movie_db(data)
+
+
+def test_from_open_movie_db_no_title():
+    data = {
+        "Year": "2021",
+        "imdbID": "tt1234567",
+        "Runtime": "120 min",
+        "Response": "True",
+        "Genre": "Action",
+        "Director": "John Doe",
+        "Poster": "https://www.example.com/poster.jpg",
+        "Released": "01 Jan 2021",
+    }
+    with pytest.raises(ValueError) as e:
+        Movie.from_open_movie_db(data)
+
+
+def test_from_open_movie_db_no_imdb_id():
+    data = {
+        "Title": "Test Movie",
+        "Year": "2021",
+        "Runtime": "120 min",
+        "Response": "True",
+        "Genre": "Action",
+        "Director": "John Doe",
+        "Poster": "https://www.example.com/poster.jpg",
+        "Released": "01 Jan 2021",
+    }
+    with pytest.raises(ValueError) as e:
+        Movie.from_open_movie_db(data)
+
+
+def test_from_open_movie_response_false():
+    data = {
+        "Response": "False",
+    }
+    with pytest.raises(ValueError) as e:
+        Movie.from_open_movie_db(data)
+
+
+def test_from_open_movie_db_invalid_year():
+    data = {
+        "Title": "Test Movie",
+        "Year": False,
+        "imdbID": "tt1234567",
+        "Runtime": "120 min",
+        "Response": "True",
+        "Genre": "Action",
+        "Director": "John Doe",
+        "Poster": "https://www.example.com/poster.jpg",
+        "Released": "01 Jan 2021",
+    }
+    movie = Movie.from_open_movie_db(data)
+    assert movie.year == None
+
+
+def test_from_open_movie_db_invalid_runtime(setup):
+    data = {
+        "Title": "Test Movie",
+        "Year": "2021",
+        "imdbID": "tt1234567",
+        "Runtime": "seven minutes",
+        "Response": "True",
+        "Genre": "Action",
+        "Director": "John Doe",
+        "Poster": "https://www.example.com/poster.jpg",
+        "Released": "01 Jan 2021",
+    }
+    movie = Movie.from_open_movie_db(data)
+    assert movie.runtime == None
+
+
+def test_from_open_movie_db_invalid_release_date(setup):
+    data = {
+        "Title": "Test Movie",
+        "Year": "2021",
+        "imdbID": "tt1234567",
+        "Runtime": "120 min",
+        "Response": "True",
+        "Genre": "Action",
+        "Director": "John Doe",
+        "Poster": "https://www.example.com/poster.jpg",
+        "Released": "01/01/2021",
+    }
+    movie = Movie.from_open_movie_db(data)
+    assert movie.release_date == None

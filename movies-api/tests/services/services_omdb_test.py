@@ -72,3 +72,31 @@ async def test_get_n_movies():
                 {"Title": "The Matrix Reloaded"},
                 {"Title": "The Matrix Revolutions"},
             ]
+
+
+@pytest.mark.asyncio
+async def test_get_n_movies_no_search():
+    with patch("aiohttp.ClientSession.get") as mock_get:
+        with patch("movies_api.services.omdb.get_movie_by_id") as mock_get_movie_by_id:
+            mock_get.return_value.__aenter__.return_value.json = AsyncMock(
+                return_value={
+                    "nope": [
+                        {"imdbID": "tt0133093"},
+                        {"imdbID": "tt0234215"},
+                        {"imdbID": "tt0234216"},
+                    ]
+                }
+            )
+            mock_get_movie_by_id.side_effect = [
+                {
+                    "Title": "The Matrix",
+                },
+                {
+                    "Title": "The Matrix Reloaded",
+                },
+                {
+                    "Title": "The Matrix Revolutions",
+                },
+            ]
+            response = await get_n_movies("api_key", "url", 3)
+            assert response == []

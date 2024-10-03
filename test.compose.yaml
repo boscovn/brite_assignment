@@ -15,8 +15,8 @@ services:
       timeout: 30s
     ports:
       - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    tmpfs:
+      - /var/lib/postgresql/data
   mock-omdb-api:
     build:
       context: ./mock-omdb
@@ -82,5 +82,3 @@ services:
     command: ["--test", "/data/e2e.hurl", "--variable", "API_URL=http://api:8080"]
     volumes:
       - ./test-utils/e2e:/data
-volumes:
-  postgres_data:

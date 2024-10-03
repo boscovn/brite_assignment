@@ -1,18 +1,15 @@
 clean:
-	OMDB_API_KEY=notneeded docker compose down -v
+	OMDB_API_KEY=notneeded docker compose down --volumes
 	OMDB_API_KEY=notneeded
-	docker compose -f test.compose.yaml down -v
+	docker compose -f test.compose.yaml down --volumes
 	docker compose -f test.compose.yaml rm -f
 	#
 test_unit:
 	docker build -t movies-api-test --target test ./movies-api
 	docker run --rm movies-api-test
 
-test_env:
-	docker compose up --build -d
-
 setup_e2e_env:
-	docker compose -f test.compose.yaml up --build -d
+	docker compose -f test.compose.yaml up --build -d --scale e2e=0
 test_e2e: setup_e2e_env
 	docker compose -f test.compose.yaml run --rm e2e
 

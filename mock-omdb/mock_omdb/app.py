@@ -3,8 +3,6 @@ import json
 import os
 
 app = Flask(__name__)
-# I want movies by imdbID to be populated with a json file in the same as the app.py file
-# I may be running the app from a different directory so I need to use the absolute path
 base_path = os.path.dirname(os.path.abspath(__file__))
 movies_by_imdbID = {}
 with open(f"{base_path}/movies_by_imdbID.json", "r") as f:
