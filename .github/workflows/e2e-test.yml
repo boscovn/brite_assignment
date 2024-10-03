@@ -18,7 +18,7 @@ jobs:
 
       - name: Build and run services
         run: |
-	  docker compose -f test.compose.yaml up --build -d --scale e2e=0
+          docker compose -f test.compose.yaml up --build -d --scale e2e=0
           
       - name: Wait for services
         run: |
