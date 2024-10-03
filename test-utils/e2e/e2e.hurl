@@ -31,7 +31,7 @@ jsonpath "$.movies[9].imdb_id" == "tt0065088"
 
 GET {{API_URL}}/movies/
 [QueryStringParams]
-per_page:5
+per_page: 5
 HTTP 200
 [Asserts]
 jsonpath "$.movies" count == 5
@@ -39,15 +39,15 @@ jsonpath "$.movies" count == 5
 
 GET {{API_URL}}/movies/
 [QueryStringParams]
-page:5
+page: 5
 HTTP 200
 [Asserts]
 jsonpath "$.movies" count == 10
 
 GET {{API_URL}}/movies/
 [QueryStringParams]
-per_page:5
-page:2
+per_page: 5
+page: 2
 HTTP 200
 [Asserts]
 jsonpath "$.movies" count == 5
@@ -78,6 +78,39 @@ POST {{API_URL}}/movies/add
 }
 HTTP 400
 
+DELETE {{API_URL}}/movies/{{dolce_vita_id}}/delete
+HTTP 401
+
+POST {{API_URL}}/users/login
+{
+	"username": "admin",
+	"password": "admin"
+}
+HTTP 200
+[Captures]
+access_token: jsonpath "$.access_token"
+
+GET {{API_URL}}/users/check
+Authorization: Bearer {{access_token}}
+HTTP 200
+[Asserts]
+jsonpath "$.message" == "Hello admin"
+
+
+DELETE {{API_URL}}/movies/{{dolce_vita_id}}/delete
+Authorization: Bearer {{access_token}}
+HTTP 204
+
+DELETE {{API_URL}}/movies/{{dolce_vita_id}}/delete
+Authorization: Bearer {{access_token}}
+HTTP 404
+
+GET {{API_URL}}/movies/10000
+HTTP 404
+
+GET {{API_URL}}/movies/{{dolce_vita_id}}
+HTTP 404
+
 POST {{API_URL}}/movies/add
 {
 	"title": "La escopeta nacional"
@@ -85,4 +118,58 @@ POST {{API_URL}}/movies/add
 HTTP 201
 [Captures]
 escopeta_nacional_id: jsonpath "$.id"
+[Asserts]
+jsonpath "$.title" == "La escopeta nacional"
 
+GET {{API_URL}}/movies/{{escopeta_nacional_id}}
+HTTP 200
+[Asserts]
+jsonpath "$.title" == "La escopeta nacional"
+
+POST {{API_URL}}/movies/add
+{
+	"title": "La escopeta nacional"
+}
+HTTP 400
+
+POST {{API_URL}}/movies/add
+{
+	"year": 1978
+}
+HTTP 400
+
+
+GET {{API_URL}}/movies/get_one
+[QueryStringParams]
+title: "Movie that does not exist"
+HTTP 404
+
+
+GET {{API_URL}}/movies/get_one
+HTTP 404
+
+POST {{API_URL}}/users/login
+{
+	"username": "admin",
+	"password": "incorrect"
+}
+HTTP 403
+
+POST {{API_URL}}/users/login
+{
+	"username": "nonexistent",
+	"password": "incorrect"
+}
+HTTP 404
+
+POST {{API_URL}}/users/login
+{
+	"password": "admin"
+}
+HTTP 400
+
+POST {{API_URL}}/users/login
+{
+	"username": "admin"
+}
+HTTP 400

@@ -87,8 +87,7 @@ def add_movie():
     try:
         db.session.add(movie)
         db.session.commit()
-        cache.delete_memoized(get_movies)
-        cache.delete_memoized(get_one)
+        cache.clear()
         return movie.to_dict(), 201
     except Exception as e:
         logger.error(f"Error adding movie to the database: {e}")
@@ -104,9 +103,7 @@ def delete_movie(id):
         logger.info(f"Deleted movie from the database with id {id}")
         if res == 0:
             return {"error": "Movie not found"}, 404
-        cache.delete_memoized(get_movie, id=id)
-        cache.delete_memoized(get_one)
-        cache.delete_memoized(get_movies)
+        cache.clear()
         return "", 204
     except Exception as e:
         logger.error(f"Error deleting movie from the database: {e}")

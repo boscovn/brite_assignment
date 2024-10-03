@@ -51,6 +51,7 @@ services:
       REDIS_PASSWORD: ""
       OMDB_API_KEY: "not-needed-for-testing"
       OMDB_URL: http://mock-omdb-api:8080
+      JWT_SECRET_KEY: "super-secret"
       FLASK_ENV: Production
     build:
       context: ./movies-api
