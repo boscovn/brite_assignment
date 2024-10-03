@@ -31,4 +31,4 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push ghcr.io/boscovn/movies-api:{{ github.sha }}
+          docker push ghcr.io/boscovn/movies-api:${{ github.sha }}
