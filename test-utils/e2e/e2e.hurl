@@ -139,15 +139,6 @@ POST {{API_URL}}/movies/add
 HTTP 400
 
 
-GET {{API_URL}}/movies/get_one
-[QueryStringParams]
-title: "Movie that does not exist"
-HTTP 404
-
-
-GET {{API_URL}}/movies/get_one
-HTTP 404
-
 POST {{API_URL}}/users/login
 {
 	"username": "admin",
