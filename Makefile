@@ -27,7 +27,6 @@ run: clean
 	@echo "Application is running"
 	@echo ".........................."
 	@echo ".........................."
-	make clean_dev
 
 test: clean
 	@echo ".........................."

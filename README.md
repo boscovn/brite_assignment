@@ -44,6 +44,9 @@ make test_unit
 make test_e2e
 ```
 
+## Asciinema recording
+[![asciicast](https://asciinema.org/a/fjK0MOgHqyzgJj6nZjGJep8Ac.svg)](https://asciinema.org/a/fjK0MOgHqyzgJj6nZjGJep8Ac)
+
 ## To deploy in GCP
 
 In order to deploy in a GCP project:

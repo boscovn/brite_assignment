@@ -37,6 +37,7 @@ services:
       REDIS_DB: 0
       REDIS_PASSWORD: ""
       OMDB_API_KEY: ${OMDB_API_KEY?"OMDB_API_KEY is required"}
+      OMDB_URL: https://www.omdbapi.com
       FLASK_ENV: Production
     build:
       context: ./movies-api
