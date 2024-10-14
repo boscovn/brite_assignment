@@ -45,7 +45,11 @@ make test_e2e
 ```
 
 ## Asciinema recording
+### Test execution
 [![asciicast](https://asciinema.org/a/fjK0MOgHqyzgJj6nZjGJep8Ac.svg)](https://asciinema.org/a/fjK0MOgHqyzgJj6nZjGJep8Ac)
+### Running the API
+(It is assumed that the OMDB_API_KEY is already exported)
+[![asciicast](https://asciinema.org/a/t5W5xvsqOW4mVVyJNwgSBhoG1.svg)](https://asciinema.org/a/t5W5xvsqOW4mVVyJNwgSBhoG1)
 
 ## To deploy in GCP
 
