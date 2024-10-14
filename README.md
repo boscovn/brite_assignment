@@ -37,11 +37,11 @@ make test
 Or you can run them separately with
 
 ```bash
-make test-unit
+make test_unit
 ```
 
 ```bash
-make test-e2e
+make test_e2e
 ```
 
 ## To deploy in GCP
